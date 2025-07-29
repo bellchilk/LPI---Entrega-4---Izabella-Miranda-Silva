@@ -1,13 +1,13 @@
 import pickle
 
+
 def salvar_arquivo(nome_arquivo, objetos):
-    arquivo = open('../../dados/' + nome_arquivo + '.bin', 'wb')
-    pickle.dump(objetos, arquivo)
-    arquivo.close()
+    with open(nome_arquivo, 'wb') as arquivo:
+        pickle.dump(objetos, arquivo)
 
 def carregar_arquivo(nome_arquivo):
     try:
-        arquivo = open('../../dados/' + nome_arquivo + '.bin', 'rb')
-        objetos = pickle.load(arquivo)
-    except IOError: objetos = None
-    return objetos
+        with open(nome_arquivo, 'rb') as arquivo:
+            return pickle.load(arquivo)
+    except (IOError, pickle.PickleError):
+        return None
